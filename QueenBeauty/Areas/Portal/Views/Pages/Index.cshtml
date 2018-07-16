@@ -1,0 +1,225 @@
+﻿@{
+    ViewData["Title"] = "Pages";
+    ViewData["Description"] = "Manage site navigations and menus";
+}
+<!-- Main content -->
+
+<section class="content container-fluid" ng-controller="PageController">
+    <div class="loader-container" ng-show="isBusy">
+        <div id="loader"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                    <a asp-area="Portal" asp-controller="Pages" asp-action="Create" class="btn btn-secondary"><i class="fas fa-plus"></i></a>
+                    @*<a asp-area="Portal" asp-controller="Pages" asp-action="Index" class="btn btn-secondary"><i class="fas fa-bars"></i></a>*@
+                    @*<a asp-area="Portal" asp-controller="Pages" asp-action="Draft" class="btn btn-secondary"><i class="mi mi-Paste"></i></a>*@
+                </div>
+                @*<div class="btn-group btn-group-sm dropdown mr-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownOrderBy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{request.orderBy}}
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownOrderBy">
+                            <button class="dropdown-item" ng-repeat="item in orders track by $index" ng-model="request.orderBy" ng-click="request.orderBy=item.value;loadPages();" value="{{item.value}}">{{item.title}}</button>
+                        </div>
+                    </div>
+                    <div class="btn-group btn-group-sm mr-2" role="group" aria-label="First group">
+                        <button class="btn btn-secondary" ng-repeat="item in directions track by $index" ng-model="request.direction" ng-click="request.direction=item.value;loadPages();" value="{{item.value}}">{{item.title}}</button>
+                    </div>
+                    <div class="dropdown mr-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownItemPerPage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{request.pageSize}} items
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownItemPerPage">
+                            <button class="dropdown-item" ng-repeat="item in pageSizes track by $index" ng-model="request.pageSize" ng-click="request.pageSize=item;loadPages();" value="{{item}}">{{item}}</button>
+                        </div>
+                    </div>
+                    <div class="input-group mr-2" role="group" aria-label="First group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id=""><i class="mi mi-Calendar"></i></span>
+                        </div>
+                        <input type="date" ng-model="request.fromDate" ng-change="loadPages()" class="form-control" />
+                        <input type="date" ng-model="request.toDate" ng-change="loadPages()" class="form-control" />
+                    </div>*@
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend" ng-click="loadPages()">
+                    <div class="input-group-text" id="btnGroupAddon"><i class="mi mi-Search" style="top:0;"></i></div>
+                </div>
+                <input ng-model="request.keyword" ng-enter="loadPages()" type="text" class="form-control" placeholder="Search..." aria-label="Search..." aria-describedby="btnGroupAddon">
+            </div>
+        </div>
+    </div>
+    <table id="list-page" class="table table-hover sortable" cellspacing="0" ng-init="data = loadPages()">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" width="3%">
+                    <span class="fas fa-sort"></span>
+                </th>
+                <th scope="col" width="4%">
+                    <span class="fas fa-sort-numeric-down"></span>
+                </th>
+                <th scope="col" width="20%">
+                    Title
+                </th>
+                <th scope="col">
+                    Description
+                </th>
+                @*<th scope="col">
+                        Type
+                    </th>*@
+                <th scope="col" width="15%">
+                    Created Date
+                </th>
+                <th scope="col" width="10%">
+                    By
+                </th>
+
+                <th scope="col" width="5%" class="text-right">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody class="sortable-item" ng-repeat="item in data.items track by $index">
+            <tr class="" sort-model="category" sort-model-id="{{item.id}}" data-toggle="collapse" href="#collapse-page{{item.id}}-childs" role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+
+                <td style="cursor:move;" class="drag-header">
+                    <span class="fas fa-sort"></span>
+                </td>
+                <td>
+                    <input type="text" value="{{item.priority}}" class="item-priority form-control form-control-sm d-inline" style="width:40px;" />
+                </td>
+
+                <td>
+                    {{item.title}}
+                </td>
+                <td>
+                    <small>
+                        {{item.excerpt}}
+                    </small>
+                </td>
+                @*<td>
+                        {{item.type}}
+                    </td>*@
+                <td>
+                    <small>
+                        {{item.createdDateTime | utcToLocal:'dd.MM.yy - hh:mm a'}}
+                    </small>
+                </td>
+                <td>
+                    {{item.createdBy}}
+                </td>
+
+                <td>
+                    <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+
+                        <a ng-if="item.childs.length>0" class="btn btn-light" data-toggle="collapse" href="#collapse-page{{item.id}}-childs" role="button" aria-expanded="false" aria-controls="collapse-page{{item.id}}-childs">
+                            <span class="fas fa-sitemap text-success"></span>
+                        </a>
+                        <a href="/{{currentLanguage}}/portal/pages/edit/{{item.id}}" class="btn btn-light"> <span class="fas fa-pencil-alt text-primary"></span></a>
+                        <a href="{{item.detailsUrl}}" target="_blank" class="btn btn-light"><span class="fas fa-eye text-info"></span></a>
+                        <a href="#" class="btn btn-light"
+                           ng-click="removePage(item.id)">
+                            <span class="fas fa-times text-danger"></span>
+                        </a>
+                        @*<button type="button" class="btn btn-light del-popover"
+                                    data-toggle="popover" data-html="true">
+                                <span class="fas fa-times text-danger"></span>
+                            </button>
+                            <div class="popover-body">
+                                <a href="/{{currentLanguage}}/portal/pages/delete/{{item.id}}" class="btn btn btn-danger">Yes, I want to delete!</a>
+                            </div>*@
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="7" style="padding:0">
+                    <div class="collapse" id="collapse-page{{item.id}}-childs" data-parent="#list-page">
+                        <table class="table table-sm table-hover mb-0" cellspacing="0" style="background-color: #eee;" ng-if="item.childs.length>0">
+                            <thead style="font-size:small; font-weight:normal">
+                                <tr>
+                                    <th scope="col" width="3%">
+                                        <span class="fas fa-sort" style="font-size:small"></span>
+                                    </th>
+                                    <th scope="col" width="4%">
+                                        <span class="fas fa-sort-numeric-down"></span>
+                                    </th>
+                                    <th scope="col" width="20%">
+                                        Title
+                                    </th>
+                                    <th scope="col">
+                                        Description
+                                    </th>
+                                    <th scope="col" width="15%">
+                                        Created Date
+                                    </th>
+                                    <th scope="col" width="10%">
+                                        Created By
+                                    </th>
+
+                                    <th scope="col" width="5%" class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="sortable">
+                                <tr class="sortable-item" ng-repeat="c in item.childs track by $index">
+                                    <td style="cursor:move;" class="drag-header">
+                                        <span class="fas fa-sort" style="font-size:small"></span>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="0" class="item-priority form-control form-control-sm d-inline" style="width:40px;">
+                                    </td>
+                                    <td>
+                                        <span ng-bind="c.title" />
+                                    </td>
+                                    <td>
+                                        <span ng-bind="c.excerpt" />
+                                    </td>
+                                    <td>
+                                        <small>
+                                            {{item.createdDateTime | utcToLocal:'dd.MM.yy - hh:mm a'}}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        {{item.createdBy}}
+                                    </td>
+
+                                    <td>
+                                        <div class="btn-group btn-group-sm btn-group-sm float-right" role="group" aria-label="Actions">
+                                            <a href="/vi-vn/portal/product/edit/807fa8dd-b7ff-4011-a0ec-ba24ee1eec0a" class="btn btn-light"> <span class="fas fa-pencil-alt text-primary"></span></a>
+                                            <a href="http://localhost:58511/vi-vn/product/gach-lot-aj32501_1" target="_blank" class="btn btn-light"><span class="fas fa-eye text-info"></span></a>
+
+                                            <button type="button" class="btn btn-light del-popover" ng-click="removePage(item.id)">
+                                                <span class="fas fa-times text-danger"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="page-item" ng-class="{disabled: data.pageIndex==0}"
+                ng-hide="data.totalPage==1">
+                <a class="page-link" href="javascript:void(0)" ng-click="loadPages(data.pageIndex-1)">Prev</a>
+            </li>
+            <li class="page-item" ng-class="{active: n-1==data.pageIndex}" ng-repeat="n in range(data.totalPage)"><a class="page-link" href="javascript:void(0)" ng-click="loadPages(n-1)">{{n}}</a></li>
+            <li class="page-item" ng-class="{disabled: data.pageIndex >= (data.totalPage-1)}"
+                ng-hide="data.totalPage==1">
+                <a class="page-link" href="javascript:void(0)" ng-click="loadPages(data.pageIndex + 1)">
+                    Next
+                </a>
+            </li>
+        </ul>
+    </nav>
+</section>
+@section scripts{
+    <script src="~/app/controllers/portal-page-controller.js"></script>
+}

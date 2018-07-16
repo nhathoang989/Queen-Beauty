@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="16x16" href="@LocalizerService.GetLocalString("Favicon",ViewBag.culture,"/favicon-16x16.png")">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>@ViewData["Title"] - @LocalizerService.GetLocalString("Theme", ViewBag.culture, "Swastika - I/O")</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <meta name="format-detection" content="telephone=no" />
+	<link rel="icon" href="/Content/Templates/ego-beauty/ego-beauty-salon/site/images/favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	<link rel="stylesheet" href="/Content/Templates/ego-beauty/ego-beauty-salon/site/css/camera.css">
+	<link rel="stylesheet" href="/Content/Templates/ego-beauty/ego-beauty-salon/site/css/style.css">
+	<link href='//fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery-migrate-1.1.1.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/script.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery.ui.totop.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/superfish.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery.equalheights.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery.mobilemenu.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery.easing.1.3.js"></script>
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/camera.js"></script>
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<script src="/Content/Templates/ego-beauty/ego-beauty-salon/site/js/jquery.mobile.customized.min.js"></script>
+	<!--<![endif]-->
+	<script>
+ 	$(document).ready(function(){
+		jQuery('#camera_wrap').camera({
+			loader: false,
+			pagination: true ,
+			minHeight: '250',
+			thumbnails: true,
+			height: '34.94791666666667%',
+			caption: true,
+			navigation: false,
+			fx: 'mosaic'
+		});
+		$().UItoTop({ easingType: 'easeOutQuart' });
+	})
+	</script>
+	<!--[if lt IE 8]>
+	<div style=' clear: both; text-align:center; position: relative;'>
+		<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+			<img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
+		</a>
+	</div>
+	<![endif]-->
+	<!--[if lt IE 9]>
+		<script src="js/html5shiv.js"></script>
+		<link rel="stylesheet" media="screen" href="css/ie.css">
+	<![endif]-->
+    @RenderSection("Styles", false)
+</head>
+<body class="@this.ViewData["pageClass"]" id="top"  ng-app="SwastikaClient" ng-init="initApp()">
+    <div class="main_color">
+        @Html.Partial("../Layouts/_Header.cshtml")
+        @RenderBody()
+        @await Html.PartialAsync("../Layouts/_Footer.cshtml")
+    </div>
+    
+    <!-- TRUMBOWYG -->
+    <script src="/lib/Trumbowyg-2.9.0/trumbowyg.min.js"></script>
+    <script src="/lib/Trumbowyg-2.9.0/plugins/base64/trumbowyg.base64.js"></script>
+    <script src="/lib/Trumbowyg-2.9.0/plugins/cleanpaste/trumbowyg.cleanpaste.js"></script>
+    <script src="/lib/Trumbowyg-2.9.0/plugins/colors/trumbowyg.colors.js"></script>
+    <script src="/lib/Trumbowyg-2.9.0/plugins/upload/trumbowyg.upload.js"></script>
+    <script src="/lib/Trumbowyg-2.9.0/plugins/noembed/trumbowyg.noembed.js"></script>
+
+    @*<script type="text/javascript" src="/lib/DataTables/datatables.min.js"></script>*@
+
+    <script type="text/javascript" src="/lib/cropperjs-1.2.2/dist/cropper.js"></script>
+
+    <script type="text/javascript" src="/lib/ace/src/ace.js"></script>
+    <script type="text/javascript" src="/lib/ace/src/mode-csharp.js"></script>
+    <script type="text/javascript" src="/lib/ace/src/mode-razor.js"></script>
+    <script type="text/javascript" src="/lib/ace/src/mode-json.js"></script>
+    <script type="text/javascript" src="/lib/ace/src/theme-chrome.js"></script>
+    <script type="text/javascript" src="/lib/ace/src/theme-clouds_midnight.js"></script>
+    <script type="text/javascript" src="/lib/ace/src/worker-json.js"></script>
+
+    <script src="/lib/clipboard.js-2.0.0/dist/clipboard.min.js"></script>
+
+    <script type="text/javascript" src="/lib/bootstrap4-tagsinput-4.1.2/tagsinput.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <script src="/js/plugins/ng-file-upload-bower-12.2.13/ng-file-upload-all.js"></script>
+    <script src="/js/plugins/ng-file-upload-bower-12.2.13/ng-file-upload-shim.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-sanitize.js"></script>
+
+
+    <script src="/app-client/app.js"></script>
+    <script src="~/app-portal/plugins/angular-drag-and-drop-lists.min.js"></script>
+    <!-- Services-->
+    <script src="/app-portal/plugins/angular-local-storage.min.js"></script>
+    <script src="/app-portal/pages/shared/services/auth-services.js"></script>
+    <script src="/app-portal/pages/login/login-controller.js"></script>
+
+    <script src="/app-portal/pages/shared/services/common-services.js"></script>
+    
+    @RenderSection("Scripts", false)
+</body>
+</html>

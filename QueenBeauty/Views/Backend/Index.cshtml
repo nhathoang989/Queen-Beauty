@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["Description"] = "Your powerful dashboard is here";
+    Layout = "_LayoutPortal_Angular";
+}
+<section class="content container-fluid">
+
+    <div class="{{pageClass}}" ng-view>
+    </div>
+    <medias></medias>
+    <message message="message"></message>
+    <confirm message="confirmMessage"></confirm>
+</section>
